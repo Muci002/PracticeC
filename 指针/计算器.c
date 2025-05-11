@@ -74,45 +74,72 @@ int Calc(int (*pf) (int, int))
 	return pf(a, b);
 }
 
+//转移表
+void test()
+{
+	int input = 0;
+	int (*arr[5])(int , int ) = { NULL,Add,Sub, Mul, Divi};
+	do
+	{
+		int x = 0, y = 0;
+		printf("-----------------请选择---------------\n");
+		printf("1.加法  2.减法  3.乘法  4.除法  0.退出\n\n");
+		scanf("%d", &input);
+		if(!input) 
+		{
+			printf("退出计算器\n");
+			break;
+		}
+		if(input > 4)
+		{
+			printf("输入错误，请重新输入\n");
+			continue;
+		}
+		scanf("%d %d", &x, &y);
+		printf("%d\n", arr[input](x, y));
+
+	} while (input);
+}
 
 int main()
 {
 	int input = 0;
-	do
-	{
+
+	// do
+	// {
 		
-		printf("-----------------请选择---------------\n");
-		printf("1.加法  2.减法  3.乘法  4.除法  0.退出\n\n");
-		scanf("%d", &input);
-		switch (input)
-		{
-		case 1:
-			system("cls");
-			printf("%d\n\n", Calc(Add));
-			break;
-		case 2:
-			system("cls");
-			printf("%d\n\n", Calc(Sub));
-			break;
-		case 3:
-			system("cls");
-			printf("%d\n\n", Calc(Mul));
-			break;
-		case 4:
-			system("cls");
-			printf("%d\n\n", Calc(Divi));
-			break;
-		case 0:
-			system("cls");
-			printf("结束");
-			break;
-		default:
-			system("cls");
-			printf("输入错误，请重新输入\n\n ");
-			break;
+	// 	printf("-----------------请选择---------------\n");
+	// 	printf("1.加法  2.减法  3.乘法  4.除法  0.退出\n\n");
+	// 	scanf("%d", &input);
+	// 	switch (input)
+	// 	{
+	// 	case 1:
+	// 		system("cls");
+	// 		printf("%d\n\n", Calc(Add));
+	// 		break;
+	// 	case 2:
+	// 		system("cls");
+	// 		printf("%d\n\n", Calc(Sub));
+	// 		break;
+	// 	case 3:
+	// 		system("cls");
+	// 		printf("%d\n\n", Calc(Mul));
+	// 		break;
+	// 	case 4:
+	// 		system("cls");
+	// 		printf("%d\n\n", Calc(Divi));
+	// 		break;
+	// 	case 0:
+	// 		system("cls");
+	// 		printf("结束");
+	// 		break;
+	// 	default:
+	// 		system("cls");
+	// 		printf("输入错误，请重新输入\n\n ");
+	// 		break;
 
-		}
+	// 	}
 
-	} while (input);
+	// } while (input);
 	return 0;
 }
