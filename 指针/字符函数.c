@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 int main()
 {
@@ -13,7 +14,10 @@ int main()
 			arr[i] = toupper(arr[i]);
 		}
 	}
+	
+	strcpy(ch, arr);
 
+	printf("%s\n", arr);
 	printf("%s\n", arr);
 	return 0;
 }
