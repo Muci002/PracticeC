@@ -86,6 +86,18 @@ char* MyStrnCat(char* str1, const char* str2, size_t num)
 	return ret;
 }
 
+//比较两个字符串的大小
+int MyStrCmp(const char* str1, const char* str2)
+{
+	assert(str1 && str2);
+	while (*str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+	return (int)*str1 - (int)*str2;
+}
+
 int main()
 {
 	char str1[] = "How\0hhhh";
