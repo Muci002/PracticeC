@@ -47,6 +47,20 @@ char* MyStrnCpy(char* str1, const char* str2, int num)
 	return ret;
 }
 
+//链接字符串
+char* MyStrCat(char* str1, const char* str2)
+{
+	assert(str1 && str2);
+	char* ret = str1;
+	while (*str1)
+	{
+		str1++;
+	}
+	
+	while(*str1++ = *str2++);
+	return ret;
+}
+
 int main()
 {
 	char str1[] = "How\0hhhh";
