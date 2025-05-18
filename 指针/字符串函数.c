@@ -61,6 +61,31 @@ char* MyStrCat(char* str1, const char* str2)
 	return ret;
 }
 
+//链接指定长度
+char* MyStrnCat(char* str1, const char* str2, size_t num)
+{
+	assert(str1 && str2);
+	char* ret = str1;
+
+	while (*str1)
+	{
+		str1++;
+	}
+
+	while (num--)
+	{
+		if (!*str2)
+		{
+			break;
+		}
+		*str1++ = *str2++;
+	}
+
+	*str1 = '\0';
+
+	return ret;
+}
+
 int main()
 {
 	char str1[] = "How\0hhhh";
