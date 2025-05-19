@@ -98,6 +98,39 @@ int MyStrCmp(const char* str1, const char* str2)
 	return (int)*str1 - (int)*str2;
 }
 
+//在字符串中查找字符串
+char* MyStrStr(const char* str1, const char* str2)
+{
+	assert(str1 && str2);
+	const char* cur1 = str1; //遍历 str1 用
+	const char* cur2 = str2; //遍历 str2 用
+	const char* p = NULL; //记录 str2 第一次出现的位置
+
+	//特殊情况：str2是空字符串时，直接返回str1
+	if (!*str2)
+		return ((char*)str1);
+
+	while (*cur1)
+	{
+		cur2 = str2;
+		p = cur1;
+
+		while (   *p && *cur2 && !(*p - *cur2))
+		{
+			p++;
+			cur2++;
+		}
+
+		if (*cur2 == '\0')
+		{
+			return ((char*)cur1);
+		}
+		cur1++;
+	}
+	
+	return (NULL);
+}
+
 int main()
 {
 	char str1[] = "How\0hhhh";
