@@ -25,6 +25,21 @@ struct stu
 	int _d : 24;
 };
 
+//联合体
+union Un
+{
+	int a;
+	char b;
+};
+
+//枚举
+enum En
+{
+	RED,
+	GREEN,
+	BLUE
+};
+
 
 int main()
 {
