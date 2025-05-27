@@ -41,8 +41,23 @@ enum En
 };
 
 
+//判断大小端
+union Un
+{
+    int a;
+    char b;
+}un;
+
 int main()
 {
-	printf("%zd\n",sizeof(struct stu));
-	return 0;
+    un.b = 1;
+    if (un.a == 1)
+    {
+        printf("小\n");
+    }
+    else
+    {
+        printf("大\n");
+    }
+    return 0;
 }
