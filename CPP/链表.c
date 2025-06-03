@@ -37,6 +37,15 @@ void print()
 	cout << endl;
 }
 
+//删除任意元素后面的元素
+void erase(int p)
+{
+	if(ne[p])
+	{
+		mp[ne[p]] = 0;
+		ne[p] = ne[ne[p]];
+	}
+}
 
 int main()
 {
