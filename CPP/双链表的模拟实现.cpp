@@ -33,8 +33,8 @@ int find(int x)
 	return mp[x];
 }
 
-//任意位置插入
-void insert(int p, int x)
+//任意位置之后插入
+void insert_back(int p, int x)
 {
 	e[++id] = x;
 	mp[x] = id;
@@ -42,6 +42,17 @@ void insert(int p, int x)
 	ne[id] = ne[p];
 	pre[ne[p]] = id;
 	ne[p] = id;
+}
+
+//任意位置之前插入
+void insert_fornt(int p, int x)
+{
+	e[++id] = x;
+	pre[id] = pre[p];
+	mp[x] = id;
+	ne[id] = p;
+	ne[pre[p]] = id;
+	pre[p] = id;
 }
 
 int main()
