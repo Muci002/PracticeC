@@ -1,67 +1,46 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
-
 typedef unsigned long long LL;
-const int N = 1e6 + 10;
+const int N = 1e6+10;
+
 LL stk[N];
-int id;
-
-void push(int x)
-{
-	stk[++id] = x;
-}
-
-void pop()
-{
-	id--;
-}
-
-LL query()
-{
-	return stk[id];
-}
-
-LL size()
-{
-	return id;
-}
+int top;
 
 int main()
 {
-	int T = 0, n = 0;
-	LL x = 0;
-	string s;
-	cin >> T;
-	while (T--)
+	int t = 0; 
+	cin >> t;
+	while(t--)
 	{
-		id = 0;
-		cin >> n;
-		while (n--)
+		top = 0;
+		int n = 0;
+		cin >> n; 
+		while(n--)
 		{
-			cin >> s;
-			if (s == "push")
+			string op;
+			cin >> op;
+			if(op == "push")
 			{
+				LL x = 0;
 				cin >> x;
-				push(x);
+				stk[++top] = x;
 			}
-			else if (s == "pop")
+			else if(op == "pop" )
 			{
-				if (size())
-				{
-					pop();
-				}
-				else cout << "Empty" << endl;
+				if(top == 0) cout << "Empty" << endl;
+				else top--;
 			}
-			else if (s == "query")
+			else if(op == "query")
 			{
-				if (size())
-				{
-					cout << query() << endl;
-				}
-				else cout << "Anguei!" << endl;
+				if(top == 0) cout << "Anguei!" << endl;
+				else cout << stk[top] << endl;
 			}
-			else cout << size() << endl;
+			else if(op == "size")
+			{
+				cout << top << endl;
+			}
 		}
 	}
 	return 0;
