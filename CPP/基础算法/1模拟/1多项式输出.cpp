@@ -1,3 +1,4 @@
+//洛谷P1067
 #include <iostream>
 #include <cmath>
 using namespace std;
