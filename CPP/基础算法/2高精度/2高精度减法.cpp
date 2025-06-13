@@ -40,8 +40,8 @@ int main()
 
 	la = s1.size();lb = s2.size();lc = max(la, lb);
 
-	for (int i = 0; i < la; i++) a[i] = s1[la - 1 - i] - '0';
-	for (int i = 0; i < lb; i++) b[i] = s2[lb - 1 - i] - '0';
+	for (int i = 0; i < la; i++) a[la - 1 - i] = s1[i] - '0';
+	for (int i = 0; i < lb; i++) b[lb - 1 - i] = s2[i] - '0';
 
 	//高精度减法 c = a - b 
 	sub(c, a, b);
