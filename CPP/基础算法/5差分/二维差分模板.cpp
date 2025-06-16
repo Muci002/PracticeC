@@ -6,7 +6,16 @@ using namespace std;
 typedef long long LL;
 const int N = 1010;
 
-LL a[N][N], f[N][N];
+LL f[N][N];
+
+
+void insert(int x1, int y1, int x2, int y2, int k)
+{
+    f[x1][y1] += k;
+	f[x1][y2+1] -= k;
+	f[x2+1][y1] -= k;
+	f[x2+1][y2+1] += k; 
+}
 
 int main()
 {
@@ -20,10 +29,7 @@ int main()
 		{
 			int x = 0;
 			cin >> x;
-			f[i][j] += x;
-			f[i][j+1] -= x;
-			f[i+1][j] -= x;
-			f[i+1][j+1] += x;
+			insert(i,j, i, j, x);
 		}
 	}
 	
@@ -31,10 +37,7 @@ int main()
 	{
 		int x1 = 0, y1 = 0, x2 = 0, y2 = 0, k = 0;
 		cin >> x1 >> y1 >> x2 >> y2 >> k;
-		f[x1][y1] += k;
-		f[x1][y2+1] -= k;
-		f[x2+1][y1] -= k;
-		f[x2+1][y2+1] += k; 
+		insert(x1, y1, x2, y2, k);
 	}
 	
 	//对差分做前缀和还原数组 
