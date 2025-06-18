@@ -73,5 +73,20 @@ int main()
 	//检测 stream 指针指向的流是否发生读写错误
 	//如果 ferror 检测到文件错误指数符，返回非0，如果没有返回0
 
+    // int fputs( const char * str, FILE * stream );
+    // 将 str 指向的字符串写入到参数 stream 指定的流中（不包含末尾的\0)
+    //成功返回非负整数，失败返回 EOF （-1）
+
+    // char * fgets(char * str, int num, FILE * stream);
+    // 从stream指定输入流中读取字符串
+    // str 是指向字符数组的指针，str指向的空间用于储存读取到的字符串
+    // num 最大读取字符数，包含结尾的 \0, 实际最多读取 num - 1个字符
+    // stream 输入流的文件指针，（如文件流或stdin）
+    // 成功返回 str 指针
+    // 读取时遇到文件末尾，返回NULL
+    // 发生读取错误，返回NULL
+
+    fprintf(stdout, "%d", 20);
+
 	return 0;
 }
