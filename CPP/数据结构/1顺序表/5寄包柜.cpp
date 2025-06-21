@@ -7,7 +7,7 @@
 using namespace std;
 
 const int N = 1e5 + 10;
-vector<int> a[N];
+vector<int> a[N]; //创建 N 个柜子
 int n, q;
 
 int main()
@@ -17,10 +17,10 @@ int main()
 	{
 		int op = 0, i = 0, j = 0, x = 0;
 		cin >> op >> i >> j;
-		if (op == 1)
+		if (op == 1)  //存
 		{
 			cin >> x;
-			if (a[i].size() < j)
+			if (a[i].size() <= j)
 			{
 				a[i].resize(j + 1);
 			}
