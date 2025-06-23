@@ -93,7 +93,7 @@ int main()
 			//把 a 上方归位
 			Clean(x1, y1);
 		}
-		else if (op2 == "onto")
+		if (op2 == "onto")
 		{
 			//把 b 上方归位
 			Clean(x2, y2);
