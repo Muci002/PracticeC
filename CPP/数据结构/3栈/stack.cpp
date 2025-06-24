@@ -3,6 +3,12 @@
 
 using namespace std;
 
+//size 返回栈的实际的元素个数
+//empty 返回栈是否为空
+//push 进栈
+//pop 出栈
+//top 返回栈顶元素
+
 int main()
 {
 	stack<int> stk;
