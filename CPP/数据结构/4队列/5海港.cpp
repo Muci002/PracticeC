@@ -22,14 +22,14 @@ int main()
 		{
 			cin >> x;
 			q.push({t, x});
-			cont[x]++;
-			if (cont[x] == 1) kinds++;
+			if (cont[x]++ == 0) kinds++;
 		}
-		while (q.front().first <= t - 86400)  //超出一天，出队
+
+        //让队列合法
+		while ( q.size() && q.front().first <= q.back().first - 86400)  //超出一天，出队
 		{
 			int p = q.front().second;
-			cont[p]--;
-			if (cont[p] == 0) kinds--; // 1 —— > 0 国家种类减少
+			if (cont[p]-- == 1) kinds--; // 1 —— > 0 国家种类减少
 			q.pop(); //出队；
 		}
 		cout << kinds << endl;
