@@ -53,3 +53,59 @@ int main()
 
 	return 0;
 }
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+const int N = 1e5 + 10;
+int h[N], e[N*2], ne[N*2], id;  // 链式前向星存储
+bool st[N];
+
+void add(int a, int b)
+{
+	e[++id] = b;
+	ne[id] = h[a];
+	h[a] = id;
+}
+
+// 宽度优先遍历
+void bfs()
+{
+	// 创建一个队列辅助bfs
+	queue<int> q;
+	// 根节点入队
+	q.push(1);
+	st[1] = true;
+	// 若队列不为空，队头节点出队并访问该节点，然后将该点的孩子依次入队
+	while (q.size())
+	{
+		int u = q.front();
+		q.pop();
+		cout << u << " ";
+		for (int i = h[u]; i; i = ne[i])
+		{
+			int v = e[i];
+			if (!st[v])
+			{
+				q.push(v);
+				st[v] = true;
+			}
+		}
+	}
+}
+
+int main()
+{
+	int n = 0; cin >> n;
+	for (int i = 1; i < n;i++)
+	{
+		int a, b; cin >> a >> b;
+		add(a, b); add(b, a);
+	}
+
+	bfs();
+
+	return 0;
+}
