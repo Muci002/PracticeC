@@ -53,9 +53,10 @@ int main()
 	}
 	ne[n] = 0;
 
+    // 把所有的异性差放入堆中
 	for (int i = 2; i <= n; i++)
 	{
-		if (sex[i] != sex[i - 1]) // 相邻为异性，放入堆中
+		if (sex[i] != sex[i - 1]) 
 		{
 			int t = abs(e[i] - e[i - 1]);
 			heap.push({ t, i - 1, i });
@@ -69,10 +70,11 @@ int main()
 		arr.push_back(t);
 		st[t.l] = st[t.r] = true;
 
-		// 从链表中删除这两人
+		// 修改指针，还原新的队列
 		ne[pre[t.l]] = ne[t.r];
 		pre[ne[t.r]] = pre[t.l];
 
+        // 判断新的左右是否会成为一对
 		if (pre[t.l] && ne[t.r] && sex[pre[t.l]] != sex[ne[t.r]])
 		{
 			heap.push({ abs(e[pre[t.l]] - e[ne[t.r]]), pre[t.l], ne[t.r] });
