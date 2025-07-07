@@ -1,32 +1,31 @@
 //P4305 [JLOI2011] 不重复数字
 #include <iostream>
 #include <unordered_set>
-#include <vector>
+#include <cstdio>
 
 using namespace std;
 
 int main()
 {
-	int T = 0; cin >> T;
+	int T = 0;
+	scanf("%d", &T);
 	while (T--)
 	{
-		int n = 0; cin >> n;
+		int n = 0;
+		scanf("%d", &n);
 		unordered_set<int> mp;
-		vector<int> arr;
+		
 		while (n--)
 		{
-			int x; cin >> x;
+			int x;
+			scanf("%d", &x);
 			if (mp.count(x) == 0)
 			{
+				printf("%d ", x);
 				mp.insert(x);
-				arr.push_back(x);
 			}
 		}
-		for (auto e : arr)
-		{
-			cout << e << " ";
-		}
-		cout << endl;
+		printf("\n");
 	}
 
 	return 0;
