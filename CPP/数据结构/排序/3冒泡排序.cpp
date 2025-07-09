@@ -59,8 +59,12 @@ void bubble_sort()
 		// [1, i] 就是待排序区间
 		for (int j = 1; j < i; j++)
 		{
-			if (arr[j] > arr[j + 1]) swap(arr[j], arr[j + 1]);
-			flag = false;
+			if (arr[j] > arr[j + 1]) 
+            {
+                swap(arr[j], arr[j + 1]);
+                flag = false;
+            }
+			
 		}
 		if (flag) return;
 	}
