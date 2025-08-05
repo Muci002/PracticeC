@@ -13,7 +13,7 @@ struct node
 
 bool cmp(const node& x, const node& y)
 {
-	return x.w - y.s < y.w - x.s;
+	return max(-x.s,x.w - y.s) < max(y.w - x.s, -y.s);
 }
 
 int main()
