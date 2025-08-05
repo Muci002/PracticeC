@@ -58,7 +58,7 @@ int main()
         // 处理列
         sort(col, col + m, cmp);
         // 选 k - cnt 列
-        for(int i = 0; i < k - cnt; i++) sum += col[i];
+        for(int i = 0; i < min(k - cnt, m); i++) sum += col[i];
         ret = max(ret, sum);
     }
     
