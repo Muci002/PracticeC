@@ -36,10 +36,13 @@ int main(){
 
 	LL ret = 0;
 	int time = 0;
-	for (int i = 1; i < n; i++)
+	for (int i = 1; i <= n; i++)
 	{
-		time = 2 * bull[i].t;
-		ret += time * (sum -= bull[i].d);
+		// time = 2 * bull[i].t;
+		// ret += time * (sum -= bull[i].d);
+
+        ret += bull[i].d * time;
+        time += 2 * bull[i].t;
 	}
 	
 	cout << ret;
