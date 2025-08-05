@@ -14,7 +14,7 @@ typedef long long LL;
 struct node
 {
 	LL t;
-	LL d;
+	LL d; 
 }bull[N];
 
 bool cmp(const node & x, const node & y)
