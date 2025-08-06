@@ -30,7 +30,6 @@ int main()
 		int l = a[i].x, r = a[i].y;
 
 		// 按照从大到小的顺序分配
-		int flag = false;
 		for (int j = 1; j <= m; j++)
 		{
 			int w = b[j].x, &cnt = b[j].y;
