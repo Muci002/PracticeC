@@ -1,35 +1,37 @@
-// B3623
-// Anm
+// P1706
+
 #include <iostream>
 #include <vector>
 #include <unordered_set>
+
 using namespace std;
-int n, k;
+int n;
 vector<int> path;
 unordered_set<int> st;
+
 void dfs()
 {
-	if (path.size() == k)
+	if (path.size() == n)
 	{
-		for (auto e : path) cout << e << " ";
-		cout << endl;
+		for (auto e : path) printf("%5d", e);
+		printf("\n");
 		return;
 	}
-	for (int i = 1; i <= n;i++)
+	for (int i = 1; i <= n; i++)
 	{
 		if (st.count(i)) continue;
 		st.insert(i);
 		path.push_back(i);
 		dfs();
-		int tmp = path.back();
+		int x = path.back();
 		path.pop_back();
-		st.erase(tmp);
+		st.erase(x);
 	}
 }
 
 int main()
 {
-	cin >> n >> k;
+	cin >> n; 
 	dfs();
 	return 0;
 }
