@@ -23,7 +23,7 @@ void dfs(int a, int b, int len, int x, int y)
 		dfs(a + len, b + len, len, a + len, b + len);
 	}
 	// 障碍物在右上角
-	if (x < a + len && y >= b + len)
+	else if (x < a + len && y >= b + len)
 	{
 		printf("%d %d %d\n", a + len , b + len - 1, 2);
 		dfs(a, b, len, a + len - 1, b + len - 1);
@@ -32,7 +32,7 @@ void dfs(int a, int b, int len, int x, int y)
 		dfs(a + len, b + len, len, a + len, b + len);
 	}
 	// 障碍物在左下角
-	if (x >= a + len && y < b + len)
+	else if (x >= a + len && y < b + len)
 	{
 		printf("%d %d %d\n",a + len - 1, b + len , 3);
 		dfs(a, b, len, a + len - 1, b + len-1);
@@ -41,7 +41,7 @@ void dfs(int a, int b, int len, int x, int y)
 		dfs(a + len, b + len, len, a + len, b + len);
 	}
 	// 障碍物在右下角
-	if (x >= a + len && y >= b + len)
+	else if (x >= a + len && y >= b + len)
 	{
 		printf("%d %d %d\n", a + len - 1, b + len-1, 4);
 		dfs(a, b, len, a + len - 1, b + len - 1);
