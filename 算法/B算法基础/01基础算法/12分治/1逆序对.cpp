@@ -22,9 +22,8 @@ LL merge(int left, int right)
 	ret += merge(left, mid);
 	ret += merge(mid + 1, right);
 
-	// 合并两个有序数组
+	// 合并两个有序数组   一左一右情况
 	int cur1 = left, cur2 = mid + 1, i = left;
-	
 	while (cur1 <= mid && cur2 <= right)
 	{
 		if (a[cur1] <= a[cur2])	tmp[i++] = a[cur1++];
