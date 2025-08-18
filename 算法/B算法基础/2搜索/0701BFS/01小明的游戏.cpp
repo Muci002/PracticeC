@@ -28,6 +28,7 @@ int bfs()
 	{
 		PII t = q.front(); q.pop_front();
 		int i = t.first, j = t.second;
+        if(i== x2 && j == y2) return dist[i][j];
 		for (int k = 0; k < 4; k++)
 		{
 			int x = i + dx[k], y = j + dy[k];
@@ -43,8 +44,9 @@ int bfs()
 				else q.push_back({ x, y });
 				dist[x][y] = dist[i][j] + w;
 			}
-			else if (dist[x][y] > dist[i][j] + w )
+			else if (dist[x][y] > dist[i][j] + w ) // 虽然是第二次遇到，但是这种情况更优
 			{
+                // 松弛操作
 				q.push_front({ x, y });
 				dist[x][y] = dist[i][j] + w;
 			}
