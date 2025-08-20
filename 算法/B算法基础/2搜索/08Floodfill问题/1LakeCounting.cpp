@@ -31,6 +31,29 @@ void dfs(int i, int j)
 
 }
 
+void bfs(int i, int j)
+{
+	queue<PII> q;
+	q.push({ i, j });
+	st[i][j] = true;
+
+	while (q.size())
+	{
+		PII t = q.front(); q.pop();
+		int i = t.first, j = t.second;
+		for (int k = 0; k < 8; k++)
+		{
+			int x = i + dx[k], y = j+ dy[k];
+			if (x >= 1 && x <= n && y >= 1 && y <= m && st[x][y] == false && a[x][y] == 'W')
+			{
+				q.push({ x, y });
+				st[x][y] = true;
+			}
+		}
+	}
+
+}
+
 int main()
 {
 	cin >> n >> m;
@@ -41,7 +64,7 @@ int main()
 			cin >> a[i][j];
 			//cout << a[i][j] << " ";
 		}
-		cout << endl;
+		//cout << endl;
 	}
 
 	int ret = 0;
@@ -52,7 +75,8 @@ int main()
 			if (a[i][j] == 'W' && st[i][j] == false)
 			{
 				ret++;
-				dfs(i, j);
+				//dfs(i, j);
+				bfs(i, j);
 			}
 
 		}
