@@ -16,36 +16,92 @@
 
 // 注意，因为我们要找的是最终结果的位置。因此，栈里面存的是每个元素的下标。
 
+// #include <iostream>
+// #include <stack>
+
+// using namespace std;
+// const int N = 3e6 + 10;
+// int a[N], n;
+
+// void test1()
+// {
+// 	stack<int> st; // 维护一个单调递增的栈
+// 	for (int i = 1; i <= n; i++)
+// 	{
+// 		// 栈里面大于等于 a[i] 的元素全部出栈
+// 		while (st.size() && st.top() >= a[i]) st.pop();
+// 		st.push(a[i]);
+// 	}
+// }
+
+// void test2()
+// {
+// 	stack<int> st; // 维护一个单调递减的栈
+// 	for (int i = 1; i <= n; i++)
+// 	{
+// 		while (st.size() && st.top() <= a[i]) st.pop();
+// 		st.push(a[i]);
+// 	}
+// }
+
+// int main()
+// {
+
+// 	return 0;
+// }
+
+
+
+
 #include <iostream>
 #include <stack>
 
 using namespace std;
-const int N = 3e6 + 10;
-int a[N], n;
 
-void test1()
+const int N = 1e5 + 10;
+int n;
+int a[N];
+int ret[N];
+
+// 寻找当前元素左侧离他最近并且比他大的元素在哪
+void test()
 {
-	stack<int> st; // 维护一个单调递增的栈
+	stack<int> st;  // 单调递减元素的下标
 	for (int i = 1; i <= n; i++)
 	{
-		// 栈里面大于等于 a[i] 的元素全部出栈
-		while (st.size() && st.top() >= a[i]) st.pop();
-		st.push(a[i]);
+		while (st.size() && a[st.top()] <= a[i]) st.pop();
+
+		if (st.size()) ret[i] = st.top(); // 下标
+
+		st.push(i); // 下标
 	}
 }
 
+// 寻找当前元素左侧离他最近并且比他小的元素在哪
 void test2()
 {
-	stack<int> st; // 维护一个单调递减的栈
+	stack<int> st;
 	for (int i = 1; i <= n; i++)
 	{
-		while (st.size() && st.top() <= a[i]) st.pop();
-		st.push(a[i]);
+		while (st.size() && a[st.top()] >= a[i]) st.pop();
+		if(st.size()) ret[i] = st.top();
+		st.push(i);
 	}
 }
 
 int main()
 {
+	cin >> n;
+
+	for (int i = 1; i <= n; i++) cin >> a[i];
+
+	test();
+
+	for (int i = 1; i <= n; i++) cout << ret[i];
 
 	return 0;
 }
+
+// 总结：
+// 找左侧，正遍历；找右侧，逆遍历；
+// 比它大，单递减；比它小，单递增；
