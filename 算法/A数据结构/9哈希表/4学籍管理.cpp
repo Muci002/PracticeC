@@ -1,4 +1,4 @@
-//P5266 【深基17.例6】学籍管理
+//P5266
 
 #include <iostream>
 #include <unordered_map>

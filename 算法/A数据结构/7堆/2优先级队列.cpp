@@ -2,7 +2,6 @@
 #include <queue>
 
 using namespace std;
-	j    
 struct node
 {
 	int a, b, c;

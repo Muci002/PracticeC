@@ -1,4 +1,4 @@
-//P4305 [JLOI2011] 不重复数字
+//P4305 不重复数字
 #include <iostream>
 #include <unordered_set>
 #include <cstdio>
