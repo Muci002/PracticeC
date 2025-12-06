@@ -367,4 +367,324 @@ public:
 + **使用场景**：默认浅拷贝适用于无动态资源的类，有指针 / 动态内存时必须显式实现深拷贝；
 + **调用时机**：对象初始化新对象、函数按值传参、函数按值返回。
 
- 
+ ```cpp
+#include <iostream>
+#include <cstring>
+#include <assert.h>
+
+namespace tyx
+{
+	template<class T>
+	// template<class T> 是 C++ 的模板语法，核心作用是实现代码复用 + 泛型编程
+	// template 是 C++ 关键字，标记这是一个模板
+
+	class vector
+	{
+
+	public:
+		using iterator = T*;  // 相当于 typedef T* iterator;
+		using const_iterator = const T*;  
+		// cosnt 在 * 的左边：修饰指针指向的内容，指针指向的内容不能被更改
+		// cosnt 在右边：修饰指针本身，指针不能指向其他地址
+
+		// 第一个元素的迭代器
+		iterator begin()
+		{
+			return _start;
+		}
+
+		// 最后一个元素的下一个位置的迭代器 
+		iterator end()
+		{
+			return _finish;
+		}
+
+		const_iterator begin()const
+		{
+			return _start;
+		}
+
+		const_iterator end()const
+		{
+			return _finish;
+		}
+
+		// 构造函数
+		vector()
+			:_start(nullptr)
+			, _finish(nullptr)
+			, _end_of_storage(nullptr)
+		{}
+		
+		// 析构函数
+		~vector()
+		{
+			if (_start)
+			{
+				delete[] _start;
+				_start = nullptr;
+				_finish = nullptr;
+				_end_of_storage = nullptr;
+			}
+		}
+
+		// 允许用 {} 列表直接初始化 vector
+		vector(initializer_list<T> il)
+		{
+			reserve(il.size());
+			for (const auto& e : il)
+			{
+				push_back(e);
+			}
+		}
+
+		// 拷贝构造 v2(v1)
+		vector(const vector<T>& v)
+		{
+			reserve(v.capacity());
+			for (const auto& e : v)
+			{
+				push_back(e);
+			}
+		}
+
+		// 赋值重载 v0 = v1 = v3
+		// 传统写法
+		//const vector<T>& operator=(const vector<T>& v)
+		//{
+		//	if (this != &v)
+		//	{
+		//		claer();
+		//		reserve(v.capacity());
+		//		for (const auto& e : v)
+		//		{
+		//			push_back(e);
+		//		}
+		//	}
+		//	return *this; // 支持连续赋值
+		//}
+		//现代写法 // 借助其他的对象开空间
+		vector<T>(const vector<T>& v)
+		{
+			vector<T> tmp(v.begin(), v.end());
+			swap(tmp);
+		}
+
+		// v1 = v3
+		vector<T> operator=(vector<T> tmp)
+		{
+			swap(tmp);
+			return *this;
+		}
+
+		// swap 让 vector 的资源管理（分配、释放、交换）更高效、更安全、更简洁
+		void swap(vector<T>& v)
+		{
+			std::swap(_start, v._start);
+			std::swap(_finish, v._finish);
+			std::swap(_end_of_storage, v._end_of_storage)
+		}
+
+		vector(size_t n, const T& val = T())
+		{
+			reserve(n);
+			for (size_t i = 0; i < n; i++)
+			{
+				push_back(val);
+			}
+		}
+
+		vector(int n, const T& val = T())
+		{
+			reserve(n);
+			for (int i = 0; i < n; i++)
+			{
+				push_back(val);
+			}
+		}
+
+		// 函数模板，迭代器不一定是vector迭代器，也可以是其他容器的迭代器
+		template <class InputIterator 
+		vector(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
+		void clesr()
+		{
+			_finish = _start;
+		}
+
+		// 返回元素是否为空
+		bool empty()const
+		{
+			return _start == _finish;
+		}
+
+		//提前为 vector 分配至少能容纳 n 个元素的内存空间（即 “容量 capacity”），
+		// 但不会创建任何实际元素，也不会改变 vector 的当前元素个数（即 “大小 size”）。
+		void reserve(size_t n)
+		{
+			size_t sz = size();
+			if (n > capacity())
+			{
+				T* tmp = new T[n];
+				// 用于指向新分配的内存空间，它的核心作用是保证内存分配和数据迁移的安全性，避免出现内存泄漏或数据丢失，
+				if (_start)// 若旧内存有数据，拷贝到新内存
+				{
+					//memcpy(tmp, _start, sizeof(T) * sz);//有坑
+					for (size_t i = 0; i < sz(); i++)
+					{
+						// tmp[i] = _start[i]; // 如果是 string, 调用 string  的赋值深拷贝
+						std::swap(tmp[i], _start[i]);
+					}
+					delete[] _start;// 释放旧内存
+				}
+				_start = tmp;
+				_finish = _start + sz;
+				//调用 size() 计算旧元素个数，更新 _finish
+				_end_of_storage = _start + n;// 新容量的末尾
+			}
+		}
+
+		// 调整 vector 实际元素个数（size）
+		void resize(size_t n, T val = T()) // 匿名对象
+		// vector<int> vec → T = int → T val 就是 int val（第二个参数是 int 类型）
+		// 若 T = int → T() = int() → 匿名对象值为 0（int 的默认构造是初始化到 0）；
+		// 若 T = string → T() = string() → 匿名对象是空字符串（""）；
+		// 若 T = MyClass（自定义类）→ T() = MyClass() → 调用你的 MyClass 的默认构造函数创建的对象
+		{
+			if (n == size()) return;
+			if (n > size())
+			{
+				// 扩容
+				if (n > capacity())
+				{
+					reserve(n);
+				}
+				iterator it = _finish;
+				//_finish += n - size();
+				_finish = _start + n;
+				while (it < _finish)
+				{
+					*it = val;
+					it++;
+				}
+			}
+			else
+			{
+				_finish = _start + n;
+			}
+		}
+
+		//实际分配的内存空间能容纳的最大元素个数
+		size_t capacity()const
+		{
+			return _start == 0 ? 0 : _end_of_storage - _start;
+		}
+
+		// 当前实际存储的有效元素个数
+		size_t size() const
+		{
+			return _start == nullptr ? 0 : _finish - _start;
+		}
+
+		// 是重载的下标运算符
+		T& operator[](size_t i)
+		{
+			assert(i < size());
+			return _start[i];   
+		}
+
+		const T& operator[](size_t i)const
+		{
+			assert(i < size());
+			return _start[i];
+		}
+
+		// 写 &（引用传递）的核心好处
+		// 引用（& ）本质是 “变量的别名”，不会创建新的拷贝，函数直接操作 原始变量的 “别名”：
+		void push_back(const T& x) // & 表示 引用传递，核心目的是 避免拷贝、提高效率
+		{
+			// 容量满了，扩容
+			if (_finish == _end_of_storage)
+			{
+				// 扩容逻辑：空容器初始容量4，否则翻倍
+				reserve(capacity() == 0 ? 4 : capacity() * 2);
+			}
+
+			*_finish = x;// 新元素放到 _finish 位置
+			++_finish;// 末尾位置后移
+		}
+
+		void pop_back()
+		{
+			assert(!empty());
+			_finish--;
+		}
+		
+		/*void insert(size_t pos, const T& x)
+		{
+			assert(pos <= size());
+			if (_finish == _end_of_storage)
+			{
+				reserve(capacity() == 0 ? 4 : capacity() * 2);
+			}
+			for (size_t i = size(); i > pos; --i)
+			{
+				_start[i] = _start[i - 1];
+			}
+			_start[pos] = x;
+			_finish++;
+		}*/
+		 
+
+		void insert(iterator pos, const T& x)
+		{
+			assert(pos >= _start && pos <= _finish);
+			// 扩容
+			if (_finish == _end_of_storage)
+			{
+				size_t len = pos - _start;
+				// 扩容会释放旧的空间，而pos还指向旧的空间，会产生野指针问题
+				reserve(capacity() == 0 ? 0 : capacity() * 2);
+				// 阔完容后_start指向新的空间
+				pos = _start + len;
+			}
+			//挪动数据
+			iterator end = _finish - 1;
+			while (end >= pos)
+			{
+				*(end + 1) = *end;
+				--end;
+			}
+			*pos = x;
+			++_finish;
+		}
+
+		// 删除pos位置的元素
+		iterator erase(iterator pos)
+		{
+			assert(pos >= _start && pos < _finish);
+			iterator it = pos + 1;
+			while (it < _finish)
+			{
+				*(it - 1) = *it;
+				++it;
+			}
+			--_finish;
+			return pos;
+		}
+
+	private:
+		iterator _start = nullptr;  // 第一个元素的位置？
+		iterator _finish = nullptr; // 最后一个元素的下一个位置？
+		iterator _end_of_storage = nullptr;  // 底层内存空间的末尾？
+
+	};
+}
+ ```
