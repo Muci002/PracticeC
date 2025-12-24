@@ -1,4 +1,5 @@
 // 力扣 34
+#include<vector>
 
 class Solution 
 {
@@ -44,3 +45,6 @@ public:
         return {(int)(it - nums.begin()), (int)(is - nums.begin() - 1)};
     }
 };
+
+int main()
+  
